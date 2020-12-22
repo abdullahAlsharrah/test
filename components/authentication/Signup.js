@@ -20,7 +20,7 @@ const Signup = ({ navigation }) => {
 
   const handleSubmit = async () => {
     await authStore.signup(user);
-    if (authStore.user) navigation.replace("MaktabaList");
+    if (authStore.user) navigation.replace("VendorList");
   };
   return (
     <AuthContainer>

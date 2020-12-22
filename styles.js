@@ -34,7 +34,7 @@ export const ButtonStyled = styled.Text`
   color: #fff;
 `;
 
-export const MaktabaItemStyled = styled.Text`
+export const VendorItemStyled = styled.Text`
   color: ${(props) => props.theme.mainColor};
   font-size: 18;
   margin-top: 10;
@@ -43,16 +43,16 @@ export const MaktabaItemStyled = styled.Text`
   width: 100%;
 `;
 
-export const MaktabaDetailWrapper = styled.View`
+export const VendorDetailWrapper = styled.View`
   margin-top: 50;
 `;
 
-export const MaktabaDetailImage = styled.Image`
+export const VendorDetailImage = styled.Image`
   width: 150;
   height: 150;
 `;
 
-export const MaktabaDetailTitle = styled.Text`
+export const VendorDetailTitle = styled.Text`
   font-weight: bold;
   font-size: 40;
 `;
