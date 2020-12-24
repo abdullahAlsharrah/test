@@ -1,10 +1,8 @@
 // Components
-import VendorList from "../VendorList";
-import VendorDetail from "../VendorDetail";
 import Home from "../Home";
 import Signin from "../authentication/Signin";
 import Signup from "../authentication/Signup";
-
+import Profile from "../Profile";
 // ReactStuff
 import { createStackNavigator } from "@react-navigation/stack";
 import React from "react";
@@ -14,43 +12,24 @@ const { Navigator, Screen } = createStackNavigator();
 const RootNavigator = () => {
   return (
     <Navigator
-      initialRouteName="Signin"
+      initialRouteName="Home"
       screenOptions={{
         headerTintColor: "white",
         headerStyle: {
-          backgroundColor: "#90d4ed",
+          backgroundColor: "#272727",
         },
         headerTitleStyle: {
           fontWeight: "bold",
         },
       }}
     >
-      {/* <Screen
+      <Screen
         name="Home"
         component={Home}
         options={{
-          headerShown: false,
+          headerShown: true,
         }}
       />
-      <Screen
-        name="VendorList"
-        component={VendorList}
-        options={{
-          title: "Choose a Vendor",
-          headerRight: () => <CartButton />,
-        }}
-      />
-      <Screen
-        name="VendorDetail"
-        component={VendorDetail}
-        options={({ route }) => {
-          const { vendor } = route.params;
-          return {
-            title: vendor.name,
-            headerRight: () => <CartButton />,
-          };
-        }}
-      /> */}
       <Screen
         name="Signin"
         component={Signin}
@@ -60,6 +39,11 @@ const RootNavigator = () => {
         name="Signup"
         component={Signup}
         options={{ headerShown: false }}
+      />
+      <Screen
+        name="Profile"
+        component={Profile}
+        options={{ headerShown: true }}
       />
     </Navigator>
   );

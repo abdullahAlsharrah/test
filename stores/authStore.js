@@ -18,7 +18,7 @@ class AuthStore {
   signup = async (userData) => {
     try {
       const res = await instance.post("/signup", userData);
-      await this.setUser(res.data.token);
+      this.setUser(res.data.token);
     } catch (error) {
       alert(
         "🚀 ~ file: authStore.js ~ line 13 ~ AuthStore ~ signup= ~ error",
@@ -30,7 +30,7 @@ class AuthStore {
   signin = async (userData) => {
     try {
       const res = await instance.post("/signin", userData);
-      await this.setUser(res.data.token);
+      this.setUser(res.data.token);
     } catch (error) {
       alert(
         "🚀 ~ file: authStore.js ~ line 29 ~ AuthStore ~ signin= ~ error",

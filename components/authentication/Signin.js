@@ -17,7 +17,7 @@ const Signin = ({ navigation }) => {
 
   const handleSubmit = async () => {
     await authStore.signin(user);
-    if (authStore.user) navigation.replace("VendorList");
+    if (authStore.user) navigation.replace("Home");
   };
   return (
     <AuthContainer>
