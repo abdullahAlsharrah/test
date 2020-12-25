@@ -40,7 +40,8 @@ class TripStore {
       console.log("TripStore -> updateTrip -> error", error);
     }
   };
-  getTripById = (tripId) => this.trips.find((trip) => trip.id === tripId);
+  getTripByuserId = (userId) =>
+    this.trips.filter((trip) => trip.userId === userId);
 }
 
 const tripStore = new TripStore();
