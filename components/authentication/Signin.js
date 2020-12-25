@@ -17,14 +17,15 @@ const Signin = ({ navigation }) => {
 
   const handleSubmit = async () => {
     await authStore.signin(user);
-    if (authStore.user) navigation.replace("Home");
   };
+  if (authStore.user) navigation.replace("TripList");
   return (
     <AuthContainer>
       <AuthTitle>Signin</AuthTitle>
       <AuthTextInput
         onChangeText={(username) => setUser({ ...user, username })}
         placeholder="Username"
+        autoCapitalize={false}
       />
       <AuthTextInput
         onChangeText={(password) => setUser({ ...user, password })}

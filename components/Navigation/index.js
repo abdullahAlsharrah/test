@@ -1,35 +1,28 @@
 // Components
-import Home from "../Home";
+import Footer from "./Footer";
 import Signin from "../authentication/Signin";
 import Signup from "../authentication/Signup";
-import Profile from "../Profile";
 // ReactStuff
 import { createStackNavigator } from "@react-navigation/stack";
 import React from "react";
-// import CartButton from "../buttons/CartButton";
+import TripList from "../TripList";
+import ProfileList from "../profile/ProfileList";
+import ProfilePage from "../profile/ProfilePage";
+import TripDetail from "../TripDetail";
+// import FooterNavigator from "./Footer";
 
-const { Navigator, Screen } = createStackNavigator();
 const RootNavigator = () => {
+  const { Navigator, Screen } = createStackNavigator();
   return (
     <Navigator
-      initialRouteName="Home"
+      initialRouteName="Signin"
       screenOptions={{
-        headerTintColor: "white",
-        headerStyle: {
-          backgroundColor: "#272727",
-        },
         headerTitleStyle: {
           fontWeight: "bold",
         },
       }}
     >
-      <Screen
-        name="Home"
-        component={Home}
-        options={{
-          headerShown: true,
-        }}
-      />
+      <Screen name="TripList" component={TripList} />
       <Screen
         name="Signin"
         component={Signin}
@@ -41,10 +34,26 @@ const RootNavigator = () => {
         options={{ headerShown: false }}
       />
       <Screen
-        name="Profile"
-        component={Profile}
+        name="Profiles"
+        component={ProfileList}
         options={{ headerShown: true }}
       />
+      <Screen
+        name="ProfilePage"
+        component={ProfilePage}
+        options={{ headerShown: true }}
+      />
+      <Screen
+        name="TripDetail"
+        component={TripDetail}
+        options={({ route }) => {
+          const { trip } = route.params;
+          return {
+            title: trip.title,
+          };
+        }}
+      />
+      {/* <Screen name="Footer" component={FooterNavigator} /> */}
     </Navigator>
   );
 };
