@@ -20,8 +20,8 @@ const Signup = ({ navigation }) => {
 
   const handleSubmit = async () => {
     await authStore.signup(user);
-    if (authStore.user) navigation.replace("Signin");
   };
+  if (authStore.user) navigation.replace("Signin");
   return (
     <AuthContainer>
       <AuthTitle>Signup</AuthTitle>

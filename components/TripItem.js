@@ -24,7 +24,6 @@ import { TouchableOpacity } from "react-native-gesture-handler";
 const TripItem = ({ trip, navigation }) => {
   if (profileStore.loading) return <Spinner />;
   const profile = profileStore.getProfileByUserId(trip.userId);
-  console.log(profile);
   return (
     // <Container>
     <Content>
@@ -68,16 +67,18 @@ const TripItem = ({ trip, navigation }) => {
         >
           <CardItem
             style={{
-              width: "108%",
+              width: "109%",
               height: "100%",
               backgroundColor: "transparent",
               marginTop: -10,
-              marginLeft: -17,
-              marginBottom: 50,
+              marginLeft: -18,
+              marginBottom: -30,
             }}
           >
             <Body>
-              <Text style={{ fontSize: "20px", marginLeft: 10 }}>
+              <Text
+                style={{ fontSize: "20px", marginLeft: 10, marginBottom: 10 }}
+              >
                 {trip.title}
               </Text>
               <Image

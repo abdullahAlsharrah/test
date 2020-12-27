@@ -1,4 +1,5 @@
 import { makeAutoObservable } from "mobx";
+import authStore from "./authStore";
 import instance from "./instance";
 class TripStore {
   trips = [];
@@ -16,12 +17,16 @@ class TripStore {
     }
   };
 
-  createTrip = async (newTrip, formData, cd) => {
+  createTrip = async (newTrip) => {
     try {
-      const res = await instance.post(`/trips`, formData);
-      cd();
+      const formData = new FormData();
+      for (const key in newTrip) formData.append(key, newTrip[key]);
+      const res = await instance.post("/trips", newTrip);
+      res.data.user = { username: authStore.user.username };
       this.trips.push(res.data);
-    } catch (error) {}
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   deleteTrip = async (tripId) => {
@@ -34,7 +39,7 @@ class TripStore {
   updateTrip = async (updatedTrip) => {
     try {
       await instance.put(`/trips/${updatedTrip.id}`, updatedTrip);
-      const trip = this.trip.find((trip) => trip.id === updatedTrip.id);
+      const trip = this.trips.find((trip) => trip.id === updatedTrip.id);
       for (const key in trip) trip[key] = updatedTrip[key];
     } catch (error) {
       console.log("TripStore -> updateTrip -> error", error);
@@ -42,6 +47,17 @@ class TripStore {
   };
   getTripByuserId = (userId) =>
     this.trips.filter((trip) => trip.userId === userId);
+
+  updateTripfavorite = async (tripId) => {
+    try {
+      //TODO: Should fix this to not fetch again!
+      await instance.put(`/trips/${tripId}`);
+      const trip = this.trips.find((trip) => trip.id === tripId);
+      trip.favorite = !trip.favorite;
+    } catch (error) {
+      console.log("Generated Error while updating:", error);
+    }
+  };
 }
 
 const tripStore = new TripStore();

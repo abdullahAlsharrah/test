@@ -6,6 +6,7 @@ import { ThemeProvider } from "styled-components";
 
 //Navigation
 import RootNavigator from "./components/Navigation";
+import NavigationFooter from "./components/Navigation/NavigationFooter";
 
 const theme = {
   light: {
@@ -24,10 +25,12 @@ const theme = {
 
 export default function App() {
   return (
-    <ThemeProvider theme={theme.light}>
-      <NavigationContainer>
-        <RootNavigator />
-      </NavigationContainer>
-    </ThemeProvider>
+    <>
+      <ThemeProvider theme={theme.light}>
+        <NavigationContainer>
+          <RootNavigator />
+        </NavigationContainer>
+      </ThemeProvider>
+    </>
   );
 }

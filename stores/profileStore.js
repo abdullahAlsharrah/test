@@ -1,10 +1,12 @@
-import { makeAutoObservable } from "mobx";
+import { action, makeAutoObservable } from "mobx";
 import instance from "./instance";
 class ProfileStore {
   profiles = [];
   loading = true;
   constructor() {
-    makeAutoObservable(this);
+    makeAutoObservable(this, {
+      fetchprofiles: action,
+    });
   }
   fetchprofiles = async () => {
     try {
@@ -19,7 +21,7 @@ class ProfileStore {
   updateProfile = async (updatedProfile) => {
     try {
       await instance.put(`/profile/${updatedProfile.id}`, updatedProfile);
-      const profile = this.profile.find(
+      const profile = this.profiles.find(
         (profile) => profile.id === updatedProfile.id
       );
       for (const key in profile) profile[key] = updatedProfile[key];
