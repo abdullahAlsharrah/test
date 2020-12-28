@@ -21,7 +21,7 @@ class TripStore {
     try {
       const formData = new FormData();
       for (const key in newTrip) formData.append(key, newTrip[key]);
-      const res = await instance.post("/trips", newTrip);
+      const res = await instance.post("/trips", formData);
       res.data.user = { username: authStore.user.username };
       this.trips.push(res.data);
     } catch (error) {
@@ -38,9 +38,12 @@ class TripStore {
 
   updateTrip = async (updatedTrip) => {
     try {
-      await instance.put(`/trips/${updatedTrip.id}`, updatedTrip);
+      const formData = new FormData();
+      for (const key in updatedTrip) formData.append(key, updatedTrip[key]);
+      const res = await instance.put(`/trips/${updatedTrip.id}`, formData);
       const trip = this.trips.find((trip) => trip.id === updatedTrip.id);
       for (const key in trip) trip[key] = updatedTrip[key];
+      trip.image = URL.createObjectURL(updatedTrip.image);
     } catch (error) {
       console.log("TripStore -> updateTrip -> error", error);
     }
