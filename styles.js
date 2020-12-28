@@ -1,4 +1,4 @@
-import { Icon } from "native-base";
+import { Card, CardItem, Icon, Tab, Text } from "native-base";
 import styled from "styled-components/native";
 
 export const HomeBackground = styled.ImageBackground`
@@ -136,4 +136,94 @@ export const AuthButtonText = styled.Text`
 export const AuthOther = styled.Text`
   color: ${(props) => props.theme.pink};
   margin-top: 15px;
+`;
+
+export const ProfileCard = styled(Card)`
+  flex: 0;
+  background-color: transparent;
+  width: 100.32%;
+  margin-left: -0.75px;
+`;
+
+export const ProfileUserName = styled(Text)`
+  font-size: 25px;
+  margin-bottom: -10px;
+`;
+export const ProfileFirstName = styled(Text)`
+  font-size: 20px;
+`;
+export const ProfileLastName = styled(Text)`
+  font-size: 20px;
+  margin-left: 4px;
+`;
+export const ProfileTrips = styled(Text)`
+  text-align: center;
+  font-size: 20px;
+  margin-right: 40px;
+  color: gray;
+`;
+
+export const ProfileBio = styled(Text)`
+  font-size: 17;
+`;
+export const ProfileCArdItem = styled(CardItem)`
+  background-color: transparent;
+`;
+export const ProfileTripList = styled(CardItem)`
+  background-color: transparent;
+  width: 112%;
+  margin-left: -33px;
+  height: 120%;
+`;
+export const ProfileTab = styled(Tab)`
+  width: 100%;
+`;
+
+export const TripItemCard = styled(Card)`
+  flex: 0;
+  background-color: transparent;
+  border-color: transparent;
+`;
+export const TripCardItem = styled(CardItem)`
+  width: 109%;
+  height: 100%;
+  background-color: transparent;
+  margin-top: -10px;
+  margin-left: -18px;
+  margin-bottom: -30px;
+`;
+export const TripTitle = styled(Text)`
+  font-size: 20px;
+  margin-left: 10px;
+  margin-bottom: 10px;
+`;
+export const TripImage = styled.Image`
+  height: 300px;
+  width: 100%;
+  flex: 1;
+`;
+export const TripDetailCardItem = styled(CardItem)`
+  width: 108%;
+  height: 100%;
+  background-color: transparent;
+  margin-top: -10px;
+  margin-left: -17px;
+  margin-bottom: 50px;
+`;
+
+export const TripDetailTitle = styled(Text)`
+  font-size: 20px;
+  margin-left: 10px;
+  margin-bottom: 10px;
+`;
+
+export const TripDetailImage = styled.Image`
+  height: 100px;
+  width: 100%;
+  flex: 1;
+`;
+
+export const TripDescription = styled(Text)`
+  margin-top: 5px;
+  font-size: 20px;
 `;

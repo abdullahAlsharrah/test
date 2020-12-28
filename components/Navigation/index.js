@@ -16,7 +16,10 @@ import AddButton from "../buttons/AddButton";
 import UpdateTrip from "../UpdateTrip";
 import LogOutButton from "../buttons/LogOutButton";
 import MyProfile from "../profile/MyProfile";
-import App from "../../App";
+import WantTo from "../wantTo/WantTo";
+import Home from "../Home";
+import profileStore from "../../stores/profileStore";
+import authStore from "../../stores/authStore";
 // import profile from "../Picker";
 
 const RootNavigator = () => {
@@ -31,11 +34,17 @@ const RootNavigator = () => {
       }}
     >
       <Screen
+        name="Home"
+        component={Home}
+        options={{
+          headerRight: () => <AddButton />,
+        }}
+      />
+      <Screen
         name="TripList"
         component={TripList}
         options={{
           headerRight: () => <AddButton />,
-          headerLeft: () => <LogOutButton />,
         }}
       />
       <Screen
@@ -58,10 +67,10 @@ const RootNavigator = () => {
         component={ProfilePage}
         options={({ route }) => {
           const { profile } = route.params;
+
           return {
             title: profile.user.username,
             headerRight: () => <AddButton />,
-            headerLeft: () => <LogOutButton />,
           };
         }}
       />
@@ -73,7 +82,6 @@ const RootNavigator = () => {
           return {
             title: trip.title,
             headerRight: () => <AddButton />,
-            headerLeft: () => <LogOutButton />,
           };
         }}
       />
@@ -85,7 +93,6 @@ const RootNavigator = () => {
           return {
             title: profile.user.username,
             headerRight: () => <AddButton />,
-            headerLeft: () => <LogOutButton />,
           };
         }}
       />
@@ -97,7 +104,6 @@ const RootNavigator = () => {
           return {
             title: trip.title,
             headerRight: () => <AddButton />,
-            headerLeft: () => <LogOutButton />,
           };
         }}
       />
@@ -109,16 +115,9 @@ const RootNavigator = () => {
           headerLeft: () => <LogOutButton />,
         }}
       />
-      <Screen
-        name="AddTrip"
-        component={AddTrip}
-        options={{
-          headerRight: () => <AddButton />,
-          headerLeft: () => <LogOutButton />,
-        }}
-      />
+      <Screen name="AddTrip" component={AddTrip} />
       <Screen name="Footer" component={FooterNavigator} />
-      {/* <Screen name="Profile" component={profile} /> */}
+      <Screen name="WantTo" component={WantTo} />
     </Navigator>
   );
 };

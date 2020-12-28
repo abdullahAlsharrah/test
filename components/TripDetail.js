@@ -1,7 +1,6 @@
 import { observer } from "mobx-react";
 import {
   Body,
-  Card,
   CardItem,
   Container,
   Content,
@@ -11,14 +10,23 @@ import {
   Thumbnail,
 } from "native-base";
 import React, { useState } from "react";
-import { Image } from "react-native";
 import { ScrollView, TouchableOpacity } from "react-native-gesture-handler";
 import authStore from "../stores/authStore";
 import profileStore from "../stores/profileStore";
 import tripStore from "../stores/tripStore";
+import {
+  ProfileCArdItem,
+  TripDescription,
+  TripDetailCardItem,
+  TripDetailImage,
+  TripDetailTitle,
+  TripItemCard,
+} from "../styles";
 import DeleteButton from "./buttons/DeleteButton";
 import UpdateButton from "./buttons/UpdateButton";
 import NavigationFooter from "./Navigation/NavigationFooter";
+import profileImg from "../img/profileImage.jpg";
+import wantToStore from "../stores/wantToStore";
 
 const TripDetail = ({ route, navigation }) => {
   const { trip } = route.params;
@@ -27,113 +35,83 @@ const TripDetail = ({ route, navigation }) => {
   const handleFavorite = () => {
     tripStore.updateTripfavorite(trip.id);
   };
-  console.log(trip);
+  const newItem = { tripId: trip.id, owner: authStore.user.id };
+  const handleAdd = () => {
+    wantToStore.addItemToWantTo(newItem);
+  };
   return (
     <>
+      {/* <Button onPress={handleAdd}>
+        <Text>Add</Text>
+      </Button> */}
       <ScrollView>
         <Container>
           <Content style={{ backgroundColor: "white" }}>
-            <Card
-              style={{
-                flex: 0,
-                backgroundColor: "transparent",
-                borderColor: "transparent",
-              }}
-            >
+            <TripItemCard>
               <TouchableOpacity
                 onPress={() =>
                   navigation.navigate("ProfilePage", { profile: profile })
                 }
               >
-                <CardItem style={{ backgroundColor: "transparent" }}>
+                <ProfileCArdItem>
                   <Left>
                     <Thumbnail
                       source={
-                        profile.image
-                          ? { uri: profile.image }
-                          : {
-                              uri:
-                                "https://thumbs.dreamstime.com/b/default-avatar-profile-icon-vector-social-media-user-image-182145777.jpg",
-                            }
+                        profile.image ? { uri: profile.image } : profileImg
                       }
                     />
                     <Body>
-                      <Text>
-                        {trip.user.username}
-                        {/* {"\n"}
-                  {trip.title} */}
-                      </Text>
+                      <Text>{trip.user.username}</Text>
                       <Text note>{trip.createdAt}</Text>
                     </Body>
                   </Left>
-                </CardItem>
+                </ProfileCArdItem>
               </TouchableOpacity>
               {authStore.user.id === profile.userId ? (
-                <CardItem
-                  style={{
-                    backgroundColor: "transparent",
-                  }}
-                >
+                <ProfileCArdItem>
                   <DeleteButton tripId={trip.id} navigation={navigation} />
                   <UpdateButton trip={trip} navigation={navigation} />
-                </CardItem>
+                </ProfileCArdItem>
               ) : null}
-              <CardItem
-                style={{
-                  width: "108%",
-                  height: "100%",
-                  backgroundColor: "transparent",
-                  marginTop: -10,
-                  marginLeft: -17,
-                  marginBottom: 50,
-                }}
-              >
+              <TripDetailCardItem>
                 <Body>
                   <CardItem>
                     <Left>
-                      <Text
-                        style={{
-                          fontSize: "20px",
-                          marginLeft: 10,
-                          marginBottom: 10,
-                        }}
-                      >
-                        {trip.title}
-                      </Text>
+                      <TripDetailTitle>{trip.title}</TripDetailTitle>
                     </Left>
                     {authStore.user.id === trip.userId ? (
                       <Right>
                         <TouchableOpacity onPress={handleFavorite}>
-                          {trip.favorite === true ? (
+                          {trip.favorite !== true ? (
                             <Text>Add to Favorite</Text>
                           ) : (
                             <Text>Remove from Favorite</Text>
                           )}
                         </TouchableOpacity>
                       </Right>
-                    ) : null}
+                    ) : (
+                      <Right>
+                        <TouchableOpacity onPress={handleAdd}>
+                          <Text>Add to Want to visit</Text>
+                        </TouchableOpacity>
+                      </Right>
+                    )}
                   </CardItem>
 
-                  <Image
+                  <TripDetailImage
                     source={{
                       uri: trip.image,
                     }}
-                    style={{
-                      height: 100,
-                      width: "100%",
-                      flex: 1,
-                    }}
                   />
                 </Body>
-              </CardItem>
+              </TripDetailCardItem>
               <CardItem>
-                <Text style={{ marginTop: 10, fontSize: 20 }}>
-                  {" "}
+                <TripDescription>
                   {"      "}
                   {trip.description}
-                </Text>
+                </TripDescription>
               </CardItem>
-            </Card>
+            </TripItemCard>
           </Content>
         </Container>
       </ScrollView>

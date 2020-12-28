@@ -4,8 +4,6 @@ import TripItem from "./TripItem";
 import tripStore from "../stores/tripStore";
 import { observer } from "mobx-react";
 import authStore from "../stores/authStore";
-import NavigationFooter from "./Navigation/NavigationFooter";
-import { ScrollView } from "react-native-gesture-handler";
 const TripList = ({ trips, navigation }) => {
   if (!authStore.user) navigation.replace("Signin");
   if (tripStore.loading) return <Spinner />;
@@ -18,9 +16,11 @@ const TripList = ({ trips, navigation }) => {
       ));
 
   return (
-    <Container style={{ backgroundColor: "white" }}>
-      <ScrollView>{tripList}</ScrollView>
-    </Container>
+    <>
+      <Content style={{ backgroundColor: "white" }}>
+        <List>{tripList}</List>
+      </Content>
+    </>
   );
 };
 export default observer(TripList);

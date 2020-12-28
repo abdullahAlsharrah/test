@@ -6,7 +6,7 @@ import { observer } from "mobx-react";
 import NavigationFooter from "../Navigation/NavigationFooter";
 import SearchBarr from "../SearchBarr";
 
-const ProfileList = () => {
+const ProfileList = ({ navigation }) => {
   const [query, setQuery] = useState("");
 
   if (profileStore.loading) return <Spinner />;
@@ -15,7 +15,9 @@ const ProfileList = () => {
     .filter((profile) =>
       profile.user.username.toLowerCase().includes(query.toLowerCase())
     )
-    .map((profile) => <ProfileItem profile={profile} key={profile.id} />);
+    .map((profile) => (
+      <ProfileItem profile={profile} key={profile.id} navigation={navigation} />
+    ));
   return (
     <>
       <Content>

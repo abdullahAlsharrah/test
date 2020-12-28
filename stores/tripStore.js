@@ -47,6 +47,7 @@ class TripStore {
   };
   getTripByuserId = (userId) =>
     this.trips.filter((trip) => trip.userId === userId);
+  getTripById = (tripId) => this.trips.find((trip) => trip.id === tripId);
 
   updateTripfavorite = async (tripId) => {
     try {

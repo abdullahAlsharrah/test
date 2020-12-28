@@ -1,12 +1,17 @@
+import { useNavigation } from "@react-navigation/native";
 import { Icon } from "native-base";
 import React from "react";
 import { View, Text } from "react-native";
 import authStore from "../../stores/authStore";
 
 const LogOutButton = () => {
+  const navigation = useNavigation();
+  const handleLogOut = () => {
+    authStore.signout();
+  };
   return (
     <Icon
-      onPress={authStore.signout}
+      onPress={handleLogOut}
       name="logout"
       type="AntDesign"
       style={{ marginLeft: 10, color: "red" }}
