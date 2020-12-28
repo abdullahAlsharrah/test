@@ -38,6 +38,7 @@ const RootNavigator = () => {
         component={Home}
         options={{
           headerRight: () => <AddButton />,
+          headerLeft: null,
         }}
       />
       <Screen

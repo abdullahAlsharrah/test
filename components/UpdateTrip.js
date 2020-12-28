@@ -10,33 +10,71 @@ import {
   Text,
   Thumbnail,
 } from "native-base";
-import React, { useState } from "react";
-import { Image } from "react-native";
 import tripStore from "../stores/tripStore";
+import React, { useState, useEffect } from "react";
+import { Image, View, Platform } from "react-native";
+import * as ImagePicker from "expo-image-picker";
+import Constants from "expo-constants";
 
-const UpdateTrip = ({ route }) => {
+const UpdateTrip = ({ route, navigation }) => {
   const { trip } = route.params;
   const [newTrip, setNewTrip] = useState(trip);
 
   const handleSubmit = async () => {
     await tripStore.updateTrip(newTrip);
+    navigation.navigate("TripList");
+  };
+  useEffect(() => {
+    (async () => {
+      if (Platform.OS !== "web") {
+        const {
+          status,
+        } = await ImagePicker.requestMediaLibraryPermissionsAsync();
+        if (status !== "granted") {
+          alert("Sorry, we need camera roll permissions to make this work!");
+        }
+      }
+    })();
+  }, []);
+
+  const pickImage = async () => {
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.All,
+      allowsEditing: true,
+      aspect: [4, 3],
+      quality: 1,
+    });
+
+    console.log(result);
+
+    if (!result.cancelled) {
+      let localUri = result.uri;
+      let filename = localUri.split("/").pop();
+
+      // Infer the type of the image
+      let match = /\.(\w+)$/.exec(filename);
+      let type = match ? `image/${match[1]}` : `image`;
+
+      setNewTrip({
+        ...newTrip,
+        image: { uri: localUri, name: filename, type },
+      });
+    }
   };
   return (
     <Container>
       <Content>
         <Form>
           <Item>
-            <Image
-              style={{ height: 200, width: 200 }}
-              source={
-                newTrip.image
-                  ? { uri: newTrip.image }
-                  : {
-                      uri:
-                        "https://thumbs.dreamstime.com/b/default-avatar-trip-icon-vector-social-media-user-image-182145777.jpg",
-                    }
-              }
-            />
+            <Button onPress={pickImage}>
+              <Text>Pick an image from camera roll</Text>
+            </Button>
+            {trip.image && (
+              <Image
+                source={{ uri: newTrip.image.uri }}
+                style={{ width: 200, height: 200 }}
+              />
+            )}
             <Text note style={{ fontSize: 17 }}>
               {" "}
               Edit Your Picture

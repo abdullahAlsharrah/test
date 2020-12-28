@@ -28,6 +28,7 @@ const Signin = ({ navigation }) => {
           <AuthTextInput
             onChangeText={(username) => setUser({ ...user, username })}
             placeholder="Username"
+            placeholderTextColor="#A6AEC1"
             autoCapitalize={false}
           />
           <AuthTextInput
