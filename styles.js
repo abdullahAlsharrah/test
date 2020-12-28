@@ -35,7 +35,7 @@ export const ButtonStyled = styled.Text`
 `;
 
 export const VendorItemStyled = styled.Text`
-  color: ${(props) => props.theme.mainColor};
+  color: #1b95e0;
   font-size: 18;
   margin-top: 10;
   margin-bottom: 10;
@@ -58,38 +58,10 @@ export const VendorDetailTitle = styled.Text`
 `;
 
 export const TotalPrice = styled.Text`
-  color: ${(props) => props.theme.pink};
+  color: #1b95e0;
   font-size: 15px;
   font-weight: bold;
   margin-left: 10px;
-`;
-
-export const CartButtonStyled = styled(Icon)`
-  color: white;
-  margin-right: 10px;
-`;
-
-export const CartTextStyled = styled.Text`
-  color: ${(props) => props.theme.backgroundColor};
-  font-size: 20px;
-`;
-
-export const TrashIcon = styled(Icon)`
-  color: ${(props) => props.theme.red};
-`;
-
-export const CheckoutButton = styled.TouchableOpacity`
-  align-self: stretch;
-  align-items: center;
-  padding: 20px;
-  background-color: ${(props) => props.theme.pink};
-  margin-top: 30px;
-`;
-
-export const CheckoutButtonText = styled.Text`
-  color: #fcfdff;
-  font-weight: bold;
-  font-size: 18px;
 `;
 
 export const AuthContainer = styled.View`
@@ -97,16 +69,16 @@ export const AuthContainer = styled.View`
   align-self: stretch;
   justify-content: center;
   align-items: center;
-  background-color: ${(props) => props.theme.backgroundColor};
+  background-color: #15202b;
   padding-right: 60px;
   padding-left: 60px;
 `;
 
 export const AuthTitle = styled.Text`
-  color: ${(props) => props.theme.pink};
+  color: #1b95e0;
   font-size: 24px;
   margin-bottom: 20px;
-  border-bottom-color: ${(props) => props.theme.pink};
+  border-bottom-color: #1b95e0;
 `;
 
 export const AuthTextInput = styled.TextInput`
@@ -114,8 +86,8 @@ export const AuthTextInput = styled.TextInput`
   text-align: left;
   height: 40px;
   margin-bottom: 30px;
-  color: ${(props) => props.theme.pink};
-  border-bottom-color: ${(props) => props.theme.pink};
+  color: #1b95e0;
+  border-bottom-color: #1b95e0;
   border-bottom-width: 1px;
 `;
 
@@ -123,7 +95,7 @@ export const AuthButton = styled.TouchableOpacity`
   align-self: stretch;
   align-items: center;
   padding: 20px;
-  background-color: ${(props) => props.theme.pink};
+  background-color: #1b95e0;
   margin-top: 30px;
 `;
 
@@ -134,7 +106,7 @@ export const AuthButtonText = styled.Text`
 `;
 
 export const AuthOther = styled.Text`
-  color: ${(props) => props.theme.pink};
+  color: red;
   margin-top: 15px;
 `;
 
@@ -226,4 +198,8 @@ export const TripDetailImage = styled.Image`
 export const TripDescription = styled(Text)`
   margin-top: 5px;
   font-size: 20px;
+`;
+
+export const NavigationIconStyled = styled(Icon)`
+  color: #1b95e0;
 `;

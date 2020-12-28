@@ -10,8 +10,10 @@ import {
   Text,
   Thumbnail,
 } from "native-base";
-import React, { useState } from "react";
 import profileStore from "../../stores/profileStore";
+import React, { useState, useEffect } from "react";
+import { Image, Platform } from "react-native";
+import * as ImagePicker from "expo-image-picker";
 
 const UpdateProfile = ({ route, navigation }) => {
   const { profile } = route.params;
@@ -20,23 +22,63 @@ const UpdateProfile = ({ route, navigation }) => {
   const handleSubmit = async () => {
     await profileStore.updateProfile(newProfile);
   };
+
+  useEffect(() => {
+    (async () => {
+      if (Platform.OS !== "web") {
+        const {
+          status,
+        } = await ImagePicker.requestMediaLibraryPermissionsAsync();
+        if (status !== "granted") {
+          alert("Sorry, we need camera roll permissions to make this work!");
+        }
+      }
+    })();
+  }, []);
+
+  const pickImage = async () => {
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.All,
+      allowsEditing: true,
+      aspect: [4, 3],
+      quality: 1,
+    });
+
+    console.log(result);
+
+    if (!result.cancelled) {
+      let localUri = result.uri;
+      let filename = localUri.split("/").pop();
+
+      // Infer the type of the image
+      let match = /\.(\w+)$/.exec(filename);
+      let type = match ? `image/${match[1]}` : `image`;
+
+      setNewProfile({
+        ...newProfile,
+        image: { uri: localUri, name: filename, type },
+      });
+    }
+  };
   return (
     <Container>
       <Content>
         <Form>
           <Item>
-            <Thumbnail
-              large
-              style={{ height: 200, width: 200 }}
-              source={
-                newProfile.image
-                  ? { uri: newProfile.image }
-                  : {
-                      uri:
-                        "https://thumbs.dreamstime.com/b/default-avatar-profile-icon-vector-social-media-user-image-182145777.jpg",
-                    }
-              }
-            />
+            <Item>
+              <Button onPress={pickImage}>
+                <Text>Pick an image from camera roll</Text>
+              </Button>
+              {newProfile.image && (
+                <Image
+                  source={{ uri: newProfile.image.uri }}
+                  style={{ width: 200, height: 200 }}
+                />
+              )}
+              <Text note style={{ fontSize: 17 }}>
+                Edit Your Picture
+              </Text>
+            </Item>
             <Text note style={{ fontSize: 17 }}>
               {" "}
               Edit Your Picture
