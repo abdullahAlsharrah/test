@@ -26,7 +26,7 @@ const theme = {
 export default function App() {
   return (
     <>
-      <ThemeProvider theme={theme.light}>
+      <ThemeProvider theme={theme.dark}>
         <NavigationContainer>
           <RootNavigator />
         </NavigationContainer>

@@ -8,12 +8,11 @@ import {
   Item,
   Label,
 } from "native-base";
-import React, { useState } from "react";
-import { Text, Image } from "react-native";
 import authStore from "../stores/authStore";
 import tripStore from "../stores/tripStore";
-import { launchCamera, launchImageLibrary } from "react-native-image-picker";
-import { TouchableOpacity } from "react-native-gesture-handler";
+import React, { useState, useEffect } from "react";
+import { Image, View, Platform, Text } from "react-native";
+import * as ImagePicker from "expo-image-picker";
 const AddTrip = ({ navigation }) => {
   const [trip, setTrip] = useState({
     image:
@@ -30,32 +29,59 @@ const AddTrip = ({ navigation }) => {
     console.log(image);
   };
 
+  useEffect(() => {
+    (async () => {
+      if (Platform.OS !== "web") {
+        const {
+          status,
+        } = await ImagePicker.requestMediaLibraryPermissionsAsync();
+        if (status !== "granted") {
+          alert("Sorry, we need camera roll permissions to make this work!");
+        }
+      }
+    })();
+  }, []);
+
+  const pickImage = async () => {
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.All,
+      allowsEditing: true,
+      aspect: [4, 3],
+      quality: 1,
+    });
+
+    console.log(result);
+
+    if (!result.cancelled) {
+      let localUri = result.uri;
+      let filename = localUri.split("/").pop();
+
+      // Infer the type of the image
+      let match = /\.(\w+)$/.exec(filename);
+      let type = match ? `image/${match[1]}` : `image`;
+
+      setTrip({ ...trip, image: { uri: localUri, name: filename, type } });
+    }
+  };
+
   return (
     <>
       <Container>
         <Content>
           <Form>
             <Item>
-              <TouchableOpacity
-                onPress={() =>
-                  launchImageLibrary({ mediaType: "photo" }, imageSize)
-                }
-              >
+              <Button onPress={pickImage}>
+                <Text>Pick an image from camera roll</Text>
+              </Button>
+              {trip.image && (
                 <Image
-                  style={{ height: 200, width: 200 }}
-                  source={
-                    trip.image
-                      ? { uri: trip.image }
-                      : {
-                          uri:
-                            "https://www.generationsforpeace.org/wp-content/uploads/2018/07/empty-300x240.jpg",
-                        }
-                  }
+                  source={{ uri: trip.image.uri }}
+                  style={{ width: 200, height: 200 }}
                 />
-                <Text note style={{ fontSize: 17 }}>
-                  Edit Your Picture
-                </Text>
-              </TouchableOpacity>
+              )}
+              <Text note style={{ fontSize: 17 }}>
+                Edit Your Picture
+              </Text>
             </Item>
             <Item floatingLabel>
               <Label>Title</Label>

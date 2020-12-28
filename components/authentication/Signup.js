@@ -31,6 +31,7 @@ const Signup = ({ navigation }) => {
           <AuthTextInput
             onChangeText={(username) => setUser({ ...user, username })}
             placeholder="Username"
+            placeholderTextColor="#A6AEC1"
           />
           <AuthTextInput
             onChangeText={(password) => setUser({ ...user, password })}
@@ -41,14 +42,17 @@ const Signup = ({ navigation }) => {
           <AuthTextInput
             onChangeText={(firstName) => setUser({ ...user, firstName })}
             placeholder="First name"
+            placeholderTextColor="#A6AEC1"
           />
           <AuthTextInput
             onChangeText={(lastName) => setUser({ ...user, lastName })}
             placeholder="Last name"
+            placeholderTextColor="#A6AEC1"
           />
           <AuthTextInput
             onChangeText={(email) => setUser({ ...user, email })}
             placeholder="email"
+            placeholderTextColor="#A6AEC1"
           />
           <AuthOther onPress={() => navigation.navigate("Signin")}>
             Click here to Login !
