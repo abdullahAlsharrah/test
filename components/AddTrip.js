@@ -13,16 +13,21 @@ import { Text, Image } from "react-native";
 import authStore from "../stores/authStore";
 import tripStore from "../stores/tripStore";
 import { launchCamera, launchImageLibrary } from "react-native-image-picker";
-const AddTrip = (navigation) => {
+import { TouchableOpacity } from "react-native-gesture-handler";
+const AddTrip = ({ navigation }) => {
   const [trip, setTrip] = useState({
     image:
       "https://www.generationsforpeace.org/wp-content/uploads/2018/07/empty-300x240.jpg",
+
     title: "",
     description: "",
   });
   const handleSubmit = async () => {
     await tripStore.createTrip(trip);
-    // navigation.navigate("TripList");
+    navigation.navigate("TripList");
+  };
+  const imageSize = (image) => {
+    console.log(image);
   };
 
   return (
@@ -31,20 +36,26 @@ const AddTrip = (navigation) => {
         <Content>
           <Form>
             <Item>
-              <Image
-                style={{ height: 200, width: 200 }}
-                source={
-                  trip.image
-                    ? { uri: trip.image }
-                    : {
-                        uri:
-                          "https://www.generationsforpeace.org/wp-content/uploads/2018/07/empty-300x240.jpg",
-                      }
+              <TouchableOpacity
+                onPress={() =>
+                  launchImageLibrary({ mediaType: "photo" }, imageSize)
                 }
-              />
-              <Text note style={{ fontSize: 17 }}>
-                Edit Your Picture
-              </Text>
+              >
+                <Image
+                  style={{ height: 200, width: 200 }}
+                  source={
+                    trip.image
+                      ? { uri: trip.image }
+                      : {
+                          uri:
+                            "https://www.generationsforpeace.org/wp-content/uploads/2018/07/empty-300x240.jpg",
+                        }
+                  }
+                />
+                <Text note style={{ fontSize: 17 }}>
+                  Edit Your Picture
+                </Text>
+              </TouchableOpacity>
             </Item>
             <Item floatingLabel>
               <Label>Title</Label>

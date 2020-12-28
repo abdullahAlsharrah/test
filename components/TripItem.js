@@ -1,100 +1,57 @@
-import React, { Component, useReducer } from "react";
-import {
-  Container,
-  Header,
-  Content,
-  Footer,
-  FooterTab,
-  Button,
-  Icon,
-  Card,
-  CardItem,
-  Thumbnail,
-  Text,
-  Left,
-  Body,
-  Right,
-  Spinner,
-} from "native-base";
-import { Image } from "react-native";
-import HasanImage from "../img/hasanlogo.png";
+import React from "react";
+import { Content, Thumbnail, Text, Left, Body, Spinner } from "native-base";
 import { observer } from "mobx-react";
 import profileStore from "../stores/profileStore";
 import { TouchableOpacity } from "react-native-gesture-handler";
+import {
+  ProfileCArdItem,
+  TripCardItem,
+  TripImage,
+  TripItemCard,
+  TripTitle,
+} from "../styles";
+import profileImg from "../img/profileImage.jpg";
 const TripItem = ({ trip, navigation }) => {
   if (profileStore.loading) return <Spinner />;
   const profile = profileStore.getProfileByUserId(trip.userId);
+
   return (
     // <Container>
     <Content>
-      <Card
-        style={{
-          flex: 0,
-          backgroundColor: "transparent",
-          borderColor: "transparent",
-        }}
-      >
+      <TripItemCard>
         <TouchableOpacity
           onPress={() =>
             navigation.navigate("ProfilePage", { profile: profile })
           }
         >
-          <CardItem style={{ backgroundColor: "transparent" }}>
+          <ProfileCArdItem>
             <Left>
               <Thumbnail
-                source={
-                  profile.image
-                    ? { uri: profile.image }
-                    : {
-                        uri:
-                          "https://thumbs.dreamstime.com/b/default-avatar-profile-icon-vector-social-media-user-image-182145777.jpg",
-                      }
-                }
+                source={profile.image ? { uri: profile.image } : profileImg}
               />
               <Body>
-                <Text>
-                  {trip.user.username}
-                  {/* {"\n"}
-                {trip.title} */}
-                </Text>
+                <Text>{trip.user.username}</Text>
                 <Text note>{trip.createdAt}</Text>
               </Body>
             </Left>
-          </CardItem>
+          </ProfileCArdItem>
         </TouchableOpacity>
         <TouchableOpacity
           onPress={() => navigation.navigate("TripDetail", { trip: trip })}
         >
-          <CardItem
-            style={{
-              width: "109%",
-              height: "100%",
-              backgroundColor: "transparent",
-              marginTop: -10,
-              marginLeft: -18,
-              marginBottom: -30,
-            }}
-          >
+          <TripCardItem>
             <Body>
-              <Text
-                style={{ fontSize: "20px", marginLeft: 10, marginBottom: 10 }}
-              >
-                {trip.title}
-              </Text>
-              <Image
+              <TripTitle>{trip.title}</TripTitle>
+
+              <TripImage
                 source={{
                   uri: trip.image,
                 }}
-                style={{
-                  height: 300,
-                  width: "100%",
-                  flex: 1,
-                }}
               />
             </Body>
-          </CardItem>
+          </TripCardItem>
         </TouchableOpacity>
-      </Card>
+      </TripItemCard>
     </Content>
     // </Container>
   );

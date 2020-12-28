@@ -1,24 +1,22 @@
 import { observer } from "mobx-react";
-import {
-  Body,
-  Card,
-  CardItem,
-  Container,
-  Content,
-  Header,
-  Left,
-  Tab,
-  Tabs,
-  Text,
-  Thumbnail,
-} from "native-base";
+import { Body, Content, Header, Left, Tab, Tabs, Thumbnail } from "native-base";
 import React from "react";
-import { View } from "react-native";
-import { ScrollView } from "react-native-gesture-handler";
 import authStore from "../../stores/authStore";
 import tripStore from "../../stores/tripStore";
 import UpdateButton from "../buttons/UpdateButton";
 import TripList from "../TripList";
+import profileImg from "../../img/profileImage.jpg";
+import {
+  ProfileBio,
+  ProfileCard,
+  ProfileCArdItem,
+  ProfileFirstName,
+  ProfileLastName,
+  ProfileTrips,
+  ProfileUserName,
+  ProfileTripList,
+} from "../../styles";
+import NavigationFooter from "../Navigation/NavigationFooter";
 
 const ProfilePage = ({ route, navigation, Myprofile }) => {
   const profile = Myprofile ? Myprofile : route.params.profile;
@@ -26,94 +24,69 @@ const ProfilePage = ({ route, navigation, Myprofile }) => {
     (trip) => trip.userId === profile.userId
   );
   const filterTrips = trips.filter((trip) => trip.favorite === true);
-  console.log("userId", profile.userId);
-  console.log(authStore.user.id);
-
   return (
-    <Content style={{ backgroundColor: "white" }}>
-      <Card
-        style={{
-          flex: 1,
-          backgroundColor: "transparent",
-          width: "100.32%",
-          marginLeft: -0.75,
-        }}
-      >
-        <CardItem style={{ backgroundColor: "transparent" }}>
-          <Body>
-            <Text style={{ fontSize: 25, marginBottom: -10 }}>
-              {profile.user.username}
-            </Text>
-          </Body>
-        </CardItem>
-        <CardItem style={{ backgroundColor: "transparent" }}>
-          <Left>
-            <Thumbnail
-              large
-              source={
-                profile.image
-                  ? { uri: profile.image }
-                  : {
-                      uri:
-                        "https://thumbs.dreamstime.com/b/default-avatar-profile-icon-vector-social-media-user-image-182145777.jpg",
-                    }
-              }
-            />
-            <Text style={{ fontSize: 20 }}>{profile.user.firstName}</Text>
-            <Text style={{ marginLeft: 4, fontSize: 20 }}>
-              {profile.user.lastName}
-            </Text>
-          </Left>
-          {trips.length === 1 ? (
-            <Text
-              style={{
-                textAlign: "center",
-                fontSize: 20,
-                marginRight: 40,
-                color: "gray",
-              }}
-            >
-              {trips.length}
-              {"\n"}Trip
-            </Text>
-          ) : (
-            <Text
-              style={{
-                textAlign: "center",
-                fontSize: 20,
-                marginRight: 40,
-                color: "gray",
-              }}
-            >
-              {trips.length}
-              {"\n"}Trips
-            </Text>
-          )}
-        </CardItem>
-        {profile.bio ? (
-          <CardItem style={{ backgroundColor: "transparent" }}>
-            <Text style={{ fontSize: 17 }}>{profile.bio}</Text>
-          </CardItem>
-        ) : null}
-        {authStore.user.id === profile.userId ? (
-          <CardItem style={{ backgroundColor: "transparent" }}>
-            <UpdateButton profile={profile} navigation={navigation} />
-          </CardItem>
-        ) : null}
-        {/* </View> */}
-      </Card>
-      <View style={{ width: "112%", marginLeft: -33, flex: 1 }}>
-        <Header hasTabs />
-        <Tabs>
-          <Tab heading={`${trips.length} Trips`} style={{ width: "100%" }}>
-            <TripList trips={trips} navigation={navigation} />
-          </Tab>
-          <Tab heading={`${filterTrips.length} Favorite Trips`}>
-            <TripList trips={filterTrips} navigation={navigation} />
-          </Tab>
-        </Tabs>
-      </View>
-    </Content>
+    <>
+      {authStore.user ? (
+        <>
+          <Content style={{ backgroundColor: "white" }}>
+            <ProfileCard>
+              <ProfileCArdItem>
+                <Body>
+                  <ProfileUserName>{profile.user.username}</ProfileUserName>
+                </Body>
+              </ProfileCArdItem>
+              <ProfileCArdItem>
+                <Left>
+                  <Thumbnail
+                    large
+                    source={profile.image ? { uri: profile.image } : profileImg}
+                  />
+                  <ProfileFirstName>{profile.user.firstName}</ProfileFirstName>
+                  <ProfileLastName>{profile.user.lastName}</ProfileLastName>
+                </Left>
+                {trips.length === 1 ? (
+                  <ProfileTrips>
+                    {trips.length}
+                    {"\n"}Trip
+                  </ProfileTrips>
+                ) : (
+                  <ProfileTrips>
+                    {trips.length}
+                    {"\n"}Trips
+                  </ProfileTrips>
+                )}
+              </ProfileCArdItem>
+              {profile.bio ? (
+                <ProfileCArdItem>
+                  <ProfileBio>{profile.bio}</ProfileBio>
+                </ProfileCArdItem>
+              ) : null}
+              {authStore.user.id === profile.userId ? (
+                <ProfileCArdItem>
+                  <UpdateButton profile={profile} navigation={navigation} />
+                </ProfileCArdItem>
+              ) : null}
+              {/* </View> */}
+
+              <ProfileTripList>
+                <Header hasTabs />
+                <Tabs>
+                  <Tab heading={`${trips.length} Trips`}>
+                    <TripList trips={trips} navigation={navigation} />
+                  </Tab>
+                  <Tab heading={`${filterTrips.length} Favorite Trips`}>
+                    <TripList trips={filterTrips} navigation={navigation} />
+                  </Tab>
+                </Tabs>
+              </ProfileTripList>
+            </ProfileCard>
+          </Content>
+          <NavigationFooter />
+        </>
+      ) : (
+        navigation.navigate("Signin")
+      )}
+    </>
   );
 };
 export default observer(ProfilePage);

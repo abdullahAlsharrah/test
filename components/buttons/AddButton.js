@@ -8,9 +8,7 @@ const AddButton = () => {
   return (
     <>
       <Icon
-        onPress={() =>
-          navigation.navigate("AddTrip", { navigation: navigation })
-        }
+        onPress={() => navigation.navigate("AddTrip")}
         name="add-circle"
         style={{ marginRight: 10 }}
       />

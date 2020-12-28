@@ -10,22 +10,31 @@ import {
   Thumbnail,
 } from "native-base";
 import React from "react";
-import HasanImage from "../../img/hasanlogo.png";
+import { TouchableOpacity } from "react-native-gesture-handler";
+import profileImage from "../../img/profileImage.jpg";
 
-const ProfileItem = ({ profile }) => {
+const ProfileItem = ({ profile, navigation }) => {
   return (
     <ListItem>
       <Content>
-        <Card style={{ flex: 0 }}>
-          <CardItem>
-            <Left>
-              <Thumbnail source={HasanImage} />
-              <Body>
-                <Text>{profile.user.username}</Text>
-              </Body>
-            </Left>
-          </CardItem>
-        </Card>
+        <TouchableOpacity
+          onPress={() =>
+            navigation.navigate("ProfilePage", { profile: profile })
+          }
+        >
+          <Card style={{ flex: 0 }}>
+            <CardItem>
+              <Left>
+                <Thumbnail
+                  source={profile.image ? { uri: profile.image } : profileImage}
+                />
+                <Body>
+                  <Text>{profile.user.username}</Text>
+                </Body>
+              </Left>
+            </CardItem>
+          </Card>
+        </TouchableOpacity>
       </Content>
     </ListItem>
   );

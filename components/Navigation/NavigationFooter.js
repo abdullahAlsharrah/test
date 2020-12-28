@@ -8,17 +8,17 @@ const NavigationFooter = () => {
   return (
     <Footer style={{ position: "absolute", bottom: 7 }}>
       <FooterTab>
-        <Button onPress={() => navigation.navigate("TripList")}>
+        <Button onPress={() => navigation.navigate("Home")}>
           <Icon name="home" />
         </Button>
-        <Button>
-          <Icon name="group" type="FontAwesome" />
-        </Button>
-        <Button>
+        {/* <Button>
+          <Icon name="group"  />
+        </Button> */}
+        <Button onPress={() => navigation.navigate("WantTo")}>
           <Icon name="favorite" type="MaterialIcons" />
         </Button>
         <Button onPress={() => navigation.navigate("Profiles")}>
-          <Icon name="search" />
+          <Icon name="search" type="FontAwesome" />
         </Button>
         <Button onPress={() => navigation.navigate("MyProfile")}>
           <Icon name="person" />
