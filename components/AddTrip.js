@@ -13,6 +13,7 @@ import tripStore from "../stores/tripStore";
 import React, { useState, useEffect } from "react";
 import { Image, View, Platform, Text } from "react-native";
 import * as ImagePicker from "expo-image-picker";
+import { TouchableOpacity } from "react-native-gesture-handler";
 const AddTrip = ({ navigation }) => {
   const [trip, setTrip] = useState({
     image:
@@ -69,20 +70,20 @@ const AddTrip = ({ navigation }) => {
       <Container>
         <Content>
           <Form>
-            <Item>
-              <Button onPress={pickImage}>
-                <Text>Pick an image from camera roll</Text>
-              </Button>
-              {trip.image && (
-                <Image
-                  source={{ uri: trip.image.uri }}
-                  style={{ width: 200, height: 200 }}
-                />
-              )}
-              <Text note style={{ fontSize: 17 }}>
+            <TouchableOpacity onPress={pickImage}>
+              <Item>
+                {trip.image && (
+                  <Image
+                    source={{ uri: trip.image.uri }}
+                    style={{ width: "100%", height: 300, marginLeft: -9 }}
+                  />
+                )}
+              </Item>
+              <Text note style={{ fontSize: 17, textAlign: "center" }}>
                 Edit Your Picture
               </Text>
-            </Item>
+            </TouchableOpacity>
+
             <Item floatingLabel>
               <Label>Title</Label>
               <Input
