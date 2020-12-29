@@ -35,9 +35,12 @@ const TripDetail = ({ route, navigation }) => {
   const handleFavorite = () => {
     tripStore.updateTripfavorite(trip.id);
   };
-  const newItem = { tripId: trip.id, owner: authStore.user.id };
+  const newItem = { ...trip, ownerId: authStore.user.id };
   const handleAdd = () => {
     wantToStore.addItemToWantTo(newItem);
+  };
+  const handleRemove = () => {
+    wantToStore.removeItemFromWantTo(trip.id);
   };
   return (
     <>

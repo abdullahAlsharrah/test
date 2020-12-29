@@ -14,6 +14,7 @@ import profileStore from "../../stores/profileStore";
 import React, { useState, useEffect } from "react";
 import { Image, Platform } from "react-native";
 import * as ImagePicker from "expo-image-picker";
+import { TouchableOpacity } from "react-native-gesture-handler";
 
 const UpdateProfile = ({ route, navigation }) => {
   const { profile } = route.params;
@@ -65,24 +66,21 @@ const UpdateProfile = ({ route, navigation }) => {
       <Content>
         <Form>
           <Item>
-            <Item>
-              <Button onPress={pickImage}>
-                <Text>Pick an image from camera roll</Text>
-              </Button>
-              {newProfile.image && (
-                <Image
-                  source={{ uri: newProfile.image.uri }}
-                  style={{ width: 200, height: 200 }}
-                />
-              )}
-              <Text note style={{ fontSize: 17 }}>
+            <TouchableOpacity onPress={pickImage}>
+              <Item
+                style={{ alignContent: "center", justifyContent: "center" }}
+              >
+                {newProfile.image && (
+                  <Image
+                    source={{ uri: newProfile.image.uri }}
+                    style={{ width: "100%", height: 300, marginLeft: -13 }}
+                  />
+                )}
+              </Item>
+              <Text note style={{ fontSize: 17, textAlign: "center" }}>
                 Edit Your Picture
               </Text>
-            </Item>
-            <Text note style={{ fontSize: 17 }}>
-              {" "}
-              Edit Your Picture
-            </Text>
+            </TouchableOpacity>
           </Item>
           <Item floatingLabel>
             <Label>First Name</Label>

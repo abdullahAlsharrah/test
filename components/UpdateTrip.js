@@ -15,6 +15,7 @@ import React, { useState, useEffect } from "react";
 import { Image, View, Platform } from "react-native";
 import * as ImagePicker from "expo-image-picker";
 import Constants from "expo-constants";
+import { TouchableOpacity } from "react-native-gesture-handler";
 
 const UpdateTrip = ({ route, navigation }) => {
   const { trip } = route.params;
@@ -65,21 +66,23 @@ const UpdateTrip = ({ route, navigation }) => {
     <Container>
       <Content>
         <Form>
-          <Item>
-            <Button onPress={pickImage}>
-              <Text>Pick an image from camera roll</Text>
-            </Button>
-            {trip.image && (
-              <Image
-                source={{ uri: newTrip.image.uri }}
-                style={{ width: 200, height: 200 }}
-              />
-            )}
-            <Text note style={{ fontSize: 17 }}>
+          <TouchableOpacity onPress={pickImage}>
+            <Item style={{ alignContent: "center", justifyContent: "center" }}>
+              {newTrip.image && (
+                <Image
+                  source={{ uri: newTrip.image.uri }}
+                  style={{ width: "100%", height: 300, marginLeft: -14 }}
+                />
+              )}
+            </Item>
+            <Text
+              note
+              style={{ fontSize: 17, textAlign: "center", marginTop: 5 }}
+            >
               {" "}
               Edit Your Picture
             </Text>
-          </Item>
+          </TouchableOpacity>
           <Item floatingLabel>
             <Label>Title</Label>
             <Input

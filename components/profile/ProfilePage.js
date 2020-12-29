@@ -17,6 +17,8 @@ import {
   ProfileTripList,
 } from "../../styles";
 import NavigationFooter from "../Navigation/NavigationFooter";
+import { ScrollView } from "react-native-gesture-handler";
+import { View } from "react-native";
 
 const ProfilePage = ({ route, navigation, Myprofile }) => {
   const profile = Myprofile ? Myprofile : route.params.profile;
@@ -81,6 +83,7 @@ const ProfilePage = ({ route, navigation, Myprofile }) => {
               </ProfileTripList>
             </ProfileCard>
           </Content>
+
           <NavigationFooter />
         </>
       ) : (

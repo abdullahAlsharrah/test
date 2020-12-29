@@ -15,16 +15,16 @@ class WantToStore {
   };
 
   addItemToWantTo = async (newItem) => {
-    const foundItem = this.items.find((item) => item.id === newItem.id);
-    if (foundItem) null;
-    else this.items.push(newItem);
+    // const foundItem = this.items.find((item) => item.id === newItem.id);
+    // if (foundItem) null;
+    this.items.push(newItem);
     await AsyncStorage.setItem("myWantTo", JSON.stringify(this.items));
   };
 
   removeItemFromWantTo = async (itemId) => {
     // this.items = [];
     // await AsyncStorage.removeItem("myWantTo");
-    this.items = this.items.filter((item) => item.tripId !== itemId);
+    this.items = this.items.filter((item) => item.id !== itemId);
     await AsyncStorage.setItem("myWantTo", JSON.stringify(this.trips));
   };
 }

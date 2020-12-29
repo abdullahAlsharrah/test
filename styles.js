@@ -111,7 +111,6 @@ export const AuthOther = styled.Text`
 `;
 
 export const ProfileCard = styled(Card)`
-  flex: 0;
   background-color: transparent;
   width: 100.32%;
   margin-left: -0.75px;

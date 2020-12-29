@@ -40,9 +40,9 @@ class TripStore {
     try {
       const formData = new FormData();
       for (const key in updatedTrip) formData.append(key, updatedTrip[key]);
-      const res = await instance.put(`/trips/${updatedTrip.id}`, formData);
+      await instance.put(`/trips/${updatedTrip.id}`, formData);
       const trip = this.trips.find((trip) => trip.id === updatedTrip.id);
-      for (const key in trip) trip[key] = updatedTrip[key];
+      for (const key in updatedTrip) trip[key] = updatedTrip[key];
       trip.image = URL.createObjectURL(updatedTrip.image);
     } catch (error) {
       console.log("TripStore -> updateTrip -> error", error);
